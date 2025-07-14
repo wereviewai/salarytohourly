@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary and Hourly Rate Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="container-box">
+        <div class="header-left">
+            <img src="Salary to Hourly Calculator.png" alt="Logo" class="logo">
+        </div>
+        <div class="header-right">
+            <nav>
+                <ul class="menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="https://wereviewaitools.com">Contact Us</a></li>
+                    <!-- Add more menu items here -->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+<div class="main-content">
+    <h1 class="main-heading">Salary and Hourly Rate Calculator</h1>
+
+    <div class="calculator-toggle">
+        <button id="salaryToHourlyBtn" class="active">Salary to Hourly</button>
+        <button id="hourlyToSalaryBtn">Hourly to Salary</button>
+    </div>
+
+    <div id="salaryToHourlyCalculator" class="calculator-container">
+        <div class="calculator">
+            <div class="currency-buttons">
+                <button class="currency active" data-currency="$">$</button>
+                <button class="currency" data-currency="€">€</button>
+                <button class="currency" data-currency="£">£</button>
+                <button class="currency" data-currency="₹">₹</button>
+                <button class="currency" data-currency="¥">¥</button>
+            </div>
+            <div class="form-group salary-input">
+                <input type="number" id="salary" placeholder="Enter salary">
+                <select id="salaryType">
+                    <option value="annual">Annual</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="daily">Daily</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="hoursPerDay">Hours worked per day:</label>
+                <input type="number" id="hoursPerDay" value="8">
+            </div>
+            <div class="form-group">
+                <label for="daysPerWeek">Days worked per week:</label>
+                <input type="number" id="daysPerWeek" value="5">
+            </div>
+            <div class="form-group">
+                <label for="weeksPerYear">Weeks worked per year:</label>
+                <input type="number" id="weeksPerYear" value="52">
+            </div>
+            <button id="calculateBtn" onclick="calculateSalaryToHourly()">Calculate</button>
+            <div id="salaryToHourlyResult"></div>
+        </div>
+    </div>
+
+    <div id="hourlyToSalaryCalculator" class="calculator-container" style="display: none;">
+        <div class="calculator">
+            <div class="currency-buttons">
+                <button class="currency active" data-currency="$">$</button>
+                <button class="currency" data-currency="€">€</button>
+                <button class="currency" data-currency="£">£</button>
+                <button class="currency" data-currency="₹">₹</button>
+                <button class="currency" data-currency="¥">¥</button>
+            </div>
+            <div class="form-group hourly-input">
+                <input type="number" id="hourlyRate" placeholder="Enter hourly rate">
+            </div>
+            <div class="form-group">
+                <label for="hoursPerDayHourly">Hours worked per day:</label>
+                <input type="number" id="hoursPerDayHourly" value="8">
+            </div>
+            <div class="form-group">
+                <label for="daysPerWeekHourly">Days worked per week:</label>
+                <input type="number" id="daysPerWeekHourly" value="5">
+            </div>
+            <div class="form-group">
+                <label for="weeksPerYearHourly">Weeks worked per year:</label>
+                <input type="number" id="weeksPerYearHourly" value="52">
+            </div>
+            <button id="calculateHourlyToSalaryBtn" onclick="calculateHourlyToSalary()">Calculate</button>
+            <div id="hourlyToSalaryResult"></div>
+        </div>
+    </div>
+
+    <div class="info-container">
+    <h2>Salary to Hourly Calculator: Understanding Your Pay Rate</h2>
+    
+    <h3>Introduction</h3>
+    <p>Understanding how your annual salary translates to an hourly rate is crucial for budgeting, comparing job offers, or negotiating compensation. This guide explains how to convert a yearly salary to an hourly wage and provides several examples to illustrate the process.</p>
+    
+    <h3>The Basic Formula</h3>
+    <p>To convert an annual salary to an hourly rate, use this simple formula:</p>
+    <p><strong>Hourly Rate = Annual Salary / (Hours Worked Per Week × 52 Weeks)</strong></p>
+    <p>This formula assumes you work all 52 weeks of the year. If you have unpaid time off, you'll need to adjust the calculation accordingly.</p>
+    
+    <h3>Factors to Consider</h3>
+    <ul>
+        <li>Work hours per week</li>
+        <li>Paid time off (vacation, sick days, holidays)</li>
+        <li>Unpaid time off</li>
+        <li>Overtime pay (if applicable)</li>
+        <li>Benefits and other compensation</li>
+    </ul>
+    
+    <h3>Examples of Salary to Hourly Rate Conversions</h3>
+    <h4>Example 1: Standard 40-hour Workweek</h4>
+    <p>Annual Salary: $50,000<br>
+    Work Hours Per Week: 40<br>
+    Hourly Rate = $50,000 / (40 × 52) = $24.04 per hour</p>
+    
+    <h4>Example 2: Part-time Position</h4>
+    <p>Annual Salary: $30,000<br>
+    Work Hours Per Week: 25<br>
+    Hourly Rate = $30,000 / (25 × 52) = $23.08 per hour</p>
+    
+    <h3>Conclusion</h3>
+    <p>Converting your salary to an hourly rate can provide valuable insights into your compensation. It's especially useful when comparing job offers or negotiating pay. Remember that this calculation is a simplification and doesn't account for all factors, such as benefits or bonuses. Always consider the full compensation package when evaluating your earnings.</p>
+</div>
+</div>
+
+ 
+
+
+
+<script>
+let selectedCurrency = '$';
+
+document.addEventListener('DOMContentLoaded', function() {
+    const salaryToHourlyBtn = document.getElementById('salaryToHourlyBtn');
+    const hourlyToSalaryBtn = document.getElementById('hourlyToSalaryBtn');
+    const salaryToHourlyCalculator = document.getElementById('salaryToHourlyCalculator');
+    const hourlyToSalaryCalculator = document.getElementById('hourlyToSalaryCalculator');
+
+    salaryToHourlyBtn.addEventListener('click', function() {
+        salaryToHourlyBtn.classList.add('active');
+        hourlyToSalaryBtn.classList.remove('active');
+        salaryToHourlyCalculator.style.display = 'block';
+        hourlyToSalaryCalculator.style.display = 'none';
+    });
+
+    hourlyToSalaryBtn.addEventListener('click', function() {
+        hourlyToSalaryBtn.classList.add('active');
+        salaryToHourlyBtn.classList.remove('active');
+        hourlyToSalaryCalculator.style.display = 'block';
+        salaryToHourlyCalculator.style.display = 'none';
+    });
+
+    document.querySelectorAll('.currency').forEach(button => {
+        button.addEventListener('click', function() {
+            document.querySelectorAll('.currency.active').forEach(activeButton => {
+                activeButton.classList.remove('active');
+            });
+            this.classList.add('active');
+            selectedCurrency = this.dataset.currency;
+        });
+    });
+});
+
+function calculateSalaryToHourly() {
+    const salary = parseFloat(document.getElementById('salary').value);
+    const salaryType = document.getElementById('salaryType').value;
+    const hoursPerDay = parseFloat(document.getElementById('hoursPerDay').value);
+    const daysPerWeek = parseFloat(document.getElementById('daysPerWeek').value);
+    const weeksPerYear = parseFloat(document.getElementById('weeksPerYear').value);
+
+    let hourlyWage;
+    switch(salaryType) {
+        case 'annual':
+            hourlyWage = salary / (weeksPerYear * daysPerWeek * hoursPerDay);
+            break;
+        case 'monthly':
+            hourlyWage = (salary * 12) / (weeksPerYear * daysPerWeek * hoursPerDay);
+            break;
+        case 'weekly':
+            hourlyWage = salary / (daysPerWeek * hoursPerDay);
+            break;
+        case 'daily':
+            hourlyWage = salary / hoursPerDay;
+            break;
+    }
+
+    const weeklyWage = hourlyWage * hoursPerDay * daysPerWeek;
+    const monthlyWage = weeklyWage * 4;
+    const annualWage = monthlyWage * 12;
+
+    const result = document.getElementById('salaryToHourlyResult');
+    result.innerHTML = `
+        <p><strong>Hourly Pay:</strong> ${selectedCurrency}${hourlyWage.toFixed(2)}</p>
+        <p><strong>Weekly Pay:</strong> ${selectedCurrency}${weeklyWage.toFixed(2)}</p>
+        <p><strong>Monthly Pay:</strong> ${selectedCurrency}${monthlyWage.toFixed(2)}</p>
+        <p><strong>Annual Pay:</strong> ${selectedCurrency}${annualWage.toFixed(2)}</p>
+    `;
+    result.style.display = 'block';
+}
+
+function calculateHourlyToSalary() {
+    const hourlyRate = parseFloat(document.getElementById('hourlyRate').value);
+    const hoursPerDay = parseFloat(document.getElementById('hoursPerDayHourly').value);
+    const daysPerWeek = parseFloat(document.getElementById('daysPerWeekHourly').value);
+    const weeksPerYear = parseFloat(document.getElementById('weeksPerYearHourly').value);
+
+    const weeklyPay = hourlyRate * hoursPerDay * daysPerWeek;
+    const monthlyPay = weeklyPay * 4;
+    const annualPay = weeklyPay * weeksPerYear;
+
+    const result = document.getElementById('hourlyToSalaryResult');
+    result.innerHTML = `
+        <p><strong>Weekly Pay:</strong> ${selectedCurrency}${weeklyPay.toFixed(2)}</p>
+        <p><strong>Monthly Pay:</strong> ${selectedCurrency}${monthlyPay.toFixed(2)}</p>
+        <p><strong>Annual Pay:</strong> ${selectedCurrency}${annualPay.toFixed(2)}</p>
+    `;
+    result.style.display = 'block';
+}
+
+
+
+
+
+</script>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2025 Salary Calculator. All rights reserved.</p>
+        <ul class="footer-links">
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="terms-conditions.html">Terms & Conditions</a></li>
+            <li><a href="disclaimer.html">Disclaimer</a></li>
+        </ul>
+    </div>
+    
+</footer>
+
+
+
+</body>
+</html>
